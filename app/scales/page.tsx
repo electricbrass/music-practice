@@ -2,8 +2,8 @@ import Scale from "./scale";
 
 export default function Scales() {
   return (
-    <div>
+    <main>
       <Scale isTreble/>
-    </div>
+    </main>
   );
 }

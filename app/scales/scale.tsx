@@ -3,22 +3,24 @@
 import { useEffect } from "react";
 import { Vex } from "vexflow";
 
+type noteType = [string, number]
+
 const major_scales = {
-  'Cb': [['c', 4], ['d', 4], ['e', 4], ['f', 4], ['g', 4], ['a', 4], ['b', 4]],
-  'C':  [['c', 4], ['d', 4], ['e', 4], ['f', 4], ['g', 4], ['a', 4], ['b', 4]],
-  'C#': [['c', 4], ['d', 4], ['e', 4], ['f', 4], ['g', 4], ['a', 4], ['b', 4]],
-  'Db': [['d', 4], ['e', 4], ['f', 4], ['g', 4], ['a', 4], ['b', 4], ['c', 5]],
-  'D':  [['d', 4], ['e', 4], ['f', 4], ['g', 4], ['a', 4], ['b', 4], ['c', 5]],
-  'Eb': [['e', 4], ['f', 4], ['g', 4], ['a', 4], ['b', 4], ['c', 5], ['d', 5]],
-  'E':  [['e', 4], ['f', 4], ['g', 4], ['a', 4], ['b', 4], ['c', 5], ['d', 5]],
-  'F':  [['f', 4], ['g', 4], ['a', 4], ['b', 4], ['c', 5], ['d', 5], ['e', 5]],
-  'F#': [['f', 4], ['g', 4], ['a', 4], ['b', 4], ['c', 5], ['d', 5], ['e', 5]],
-  'Gb': [['g', 4], ['a', 4], ['b', 4], ['c', 5], ['d', 5], ['e', 5], ['f', 5]],
-  'G':  [['g', 4], ['a', 4], ['b', 4], ['c', 5], ['d', 5], ['e', 5], ['f', 5]],
-  'Ab': [['a', 4], ['b', 4], ['c', 5], ['d', 5], ['e', 5], ['f', 5], ['g', 5]],
-  'A':  [['a', 4], ['b', 4], ['c', 5], ['d', 5], ['e', 5], ['f', 5], ['g', 5]],
-  'Bb': [['b', 4], ['c', 5], ['d', 5], ['e', 5], ['f', 5], ['g', 5], ['a', 5]],
-  'B':  [['b', 4], ['c', 5], ['d', 5], ['e', 5], ['f', 5], ['g', 5], ['a', 5]],
+  'Cb': [['c', 0], ['d', 0], ['e', 0], ['f', 0], ['g', 0], ['a', 0], ['b', 0]] as noteType[],
+  'C':  [['c', 0], ['d', 0], ['e', 0], ['f', 0], ['g', 0], ['a', 0], ['b', 0]] as noteType[],
+  'C#': [['c', 0], ['d', 0], ['e', 0], ['f', 0], ['g', 0], ['a', 0], ['b', 0]] as noteType[],
+  'Db': [['d', 0], ['e', 0], ['f', 0], ['g', 0], ['a', 0], ['b', 0], ['c', 1]] as noteType[],
+  'D':  [['d', 0], ['e', 0], ['f', 0], ['g', 0], ['a', 0], ['b', 0], ['c', 1]] as noteType[],
+  'Eb': [['e', 0], ['f', 0], ['g', 0], ['a', 0], ['b', 0], ['c', 1], ['d', 1]] as noteType[],
+  'E':  [['e', 0], ['f', 0], ['g', 0], ['a', 0], ['b', 0], ['c', 1], ['d', 1]] as noteType[],
+  'F':  [['f', 0], ['g', 0], ['a', 0], ['b', 0], ['c', 1], ['d', 1], ['e', 1]] as noteType[],
+  'F#': [['f', 0], ['g', 0], ['a', 0], ['b', 0], ['c', 1], ['d', 1], ['e', 1]] as noteType[],
+  'Gb': [['g', 0], ['a', 0], ['b', 0], ['c', 1], ['d', 1], ['e', 1], ['f', 1]] as noteType[],
+  'G':  [['g', 0], ['a', 0], ['b', 0], ['c', 1], ['d', 1], ['e', 1], ['f', 1]] as noteType[],
+  'Ab': [['a', 0], ['b', 0], ['c', 1], ['d', 1], ['e', 1], ['f', 1], ['g', 1]] as noteType[],
+  'A':  [['a', 0], ['b', 0], ['c', 1], ['d', 1], ['e', 1], ['f', 1], ['g', 1]] as noteType[],
+  'Bb': [['b', 0], ['c', 1], ['d', 1], ['e', 1], ['f', 1], ['g', 1], ['a', 1]] as noteType[],
+  'B':  [['b', 0], ['c', 1], ['d', 1], ['e', 1], ['f', 1], ['g', 1], ['a', 1]] as noteType[],
 }
 
 const major_keys = Object.keys(major_scales);
@@ -29,8 +31,8 @@ export default function Scale({ isTreble }: { isTreble: boolean }) {
     
     const key = major_keys[major_keys.length * Math.random() << 0] as keyof typeof major_scales;
 
-    const notes = major_scales[key].map((note) => new StaveNote({ keys: [`${note[0]}/${note[1] as number}`], duration: 'q', clef: isTreble ? 'treble' : 'bass' }));
-    notes.push(new StaveNote({ keys: [`${major_scales[key][0][0]}/${major_scales[key][0][1] as number + 1}`], duration: 'q', clef: isTreble ? 'treble' : 'bass' }));
+    const notes = major_scales[key].map((note) => new StaveNote({ keys: [`${note[0]}/${note[1] + (isTreble ? 4 : 2)}`], duration: 'q', clef: isTreble ? 'treble' : 'bass' }));
+    notes.push(new StaveNote({ keys: [`${major_scales[key][0][0]}/${major_scales[key][0][1] + (isTreble ? 4 : 2) + 1}`], duration: 'q', clef: isTreble ? 'treble' : 'bass' }));
 
     // Create an SVG renderer and attach it to the DIV element with id="output".
     const div = document.getElementById('output') as HTMLDivElement;
@@ -61,6 +63,6 @@ export default function Scale({ isTreble }: { isTreble: boolean }) {
     voice.draw(context, stave);
   }, [isTreble])
   return (
-    <div id='output'></div>
+    <div id='output' className='bg-amber-100 ml-48 h-screen'></div>
   );
 }
