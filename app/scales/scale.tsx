@@ -29,8 +29,8 @@ export default function Scale({ isTreble }: { isTreble: boolean }) {
     
     const key = major_keys[major_keys.length * Math.random() << 0] as keyof typeof major_scales;
 
-    const notes = major_scales[key].map((note) => new StaveNote({ keys: [`${note[0]}/${note[1]}`], duration: 'q' }));
-    notes.push(new StaveNote({ keys: [`${major_scales[key][0][0]}/${major_scales[key][0][1] as number + 1}`], duration: 'q' }));
+    const notes = major_scales[key].map((note) => new StaveNote({ keys: [`${note[0]}/${note[1] as number}`], duration: 'q', clef: isTreble ? 'treble' : 'bass' }));
+    notes.push(new StaveNote({ keys: [`${major_scales[key][0][0]}/${major_scales[key][0][1] as number + 1}`], duration: 'q', clef: isTreble ? 'treble' : 'bass' }));
 
     // Create an SVG renderer and attach it to the DIV element with id="output".
     const div = document.getElementById('output') as HTMLDivElement;
