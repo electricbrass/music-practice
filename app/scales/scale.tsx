@@ -44,7 +44,7 @@ export default function Scale({ isTreble }: { isTreble: boolean }) {
     context.setFont('Arial', 10);
 
     // Create a stave of width 400 at position 10, 40.
-    const stave = new Stave(10, 40, 500);
+    const stave = new Stave(40, 40, 550);
 
     const voice = new Voice({ num_beats: 8, beat_value: 4 });
     voice.addTickables(notes);
@@ -63,6 +63,6 @@ export default function Scale({ isTreble }: { isTreble: boolean }) {
     voice.draw(context, stave);
   }, [isTreble])
   return (
-    <div id='output' className='bg-amber-100 ml-48 h-screen'></div>
+    <div id='output' className='bg-amber-100 h-screen'></div>
   );
 }

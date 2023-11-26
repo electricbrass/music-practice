@@ -20,9 +20,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           <Link href='/' className={linkClass}>Home</Link>
           <Link href='/scales' className={linkClass}>Scales</Link>
           <Link href='/options' className={linkClass}>Options</Link>
-          <Link href='/Account' className={linkClass}>Account</Link>
+          <Link href='/account' className={linkClass}>Account</Link>
         </div>
-        <div className={inter.className + 'ml-48'}>{children}</div>
+        <div className={inter.className + 'fixed ml-48'}>{children}</div>
       </body>
     </html>
   )
