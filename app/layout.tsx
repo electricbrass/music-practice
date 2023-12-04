@@ -16,13 +16,14 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body>
-        <div className='fixed h-full w-48 m-0 p-0 bg-red-600 border-2 border-black overflow-auto'>
+        <div className='fixed w-full h-12 m-0 p-0 bg-red-400 border-2 border-black overflow-auto top-0'></div>
+        <div className='fixed h-full w-48 m-0 p-0 bg-red-600 border-x-2 border-black overflow-auto'>
           <Link href='/' className={linkClass}>Home</Link>
           <Link href='/scales' className={linkClass}>Scales</Link>
           <Link href='/options' className={linkClass}>Options</Link>
           <Link href='/account' className={linkClass}>Account</Link>
         </div>
-        <div className={inter.className + 'fixed ml-48'}>{children}</div>
+        <div className={inter.className + 'fixed ml-48 mt-12'}>{children}</div>
       </body>
     </html>
   )

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Vex } from "vexflow";
 
 type noteType = [string, number]
@@ -26,17 +26,18 @@ const major_scales = {
 const major_keys = Object.keys(major_scales);
 
 export default function Scale({ isTreble }: { isTreble: boolean }) {
+  const outputRef = useRef(null!);
   useEffect(() => {
     const { Renderer, Stave, StaveNote, Voice, Formatter } = Vex.Flow;
     
-    const key = major_keys[major_keys.length * Math.random() << 0] as keyof typeof major_scales;
+    // const key = major_keys[major_keys.length * Math.random() << 0] as keyof typeof major_scales;
+    const key = 'Cb' as keyof typeof major_scales;
 
     const notes = major_scales[key].map((note) => new StaveNote({ keys: [`${note[0]}/${note[1] + (isTreble ? 4 : 2)}`], duration: 'q', clef: isTreble ? 'treble' : 'bass' }));
     notes.push(new StaveNote({ keys: [`${major_scales[key][0][0]}/${major_scales[key][0][1] + (isTreble ? 4 : 2) + 1}`], duration: 'q', clef: isTreble ? 'treble' : 'bass' }));
 
-    // Create an SVG renderer and attach it to the DIV element with id="output".
-    const div = document.getElementById('output') as HTMLDivElement;
-    const renderer = new Renderer(div, Renderer.Backends.SVG);
+    // Create an SVG renderer and attach it to the DIV element pointed to by outputRef
+    const renderer = new Renderer(outputRef.current, Renderer.Backends.SVG);
 
     // Configure the rendering context.
     renderer.resize(500, 500);
@@ -44,13 +45,13 @@ export default function Scale({ isTreble }: { isTreble: boolean }) {
     context.setFont('Arial', 10);
 
     // Create a stave of width 400 at position 10, 40.
-    const stave = new Stave(40, 40, 550);
+    const stave = new Stave(40, 40, 600);
 
     const voice = new Voice({ num_beats: 8, beat_value: 4 });
     voice.addTickables(notes);
 
-    // Format and justify the notes to 400 pixels.
-    new Formatter().joinVoices([voice]).format([voice], 350);
+    // Format and justify the notes to 300 pixels.
+    new Formatter().joinVoices([voice]).format([voice], 300);
 
     // Add a clef
     stave.addClef(isTreble ? 'treble' : 'bass');
@@ -63,6 +64,6 @@ export default function Scale({ isTreble }: { isTreble: boolean }) {
     voice.draw(context, stave);
   }, [isTreble])
   return (
-    <div id='output' className='bg-amber-100 h-screen'></div>
+    <div ref={outputRef} id='output' className='bg-amber-100 h-full w-full'></div>
   );
 }
