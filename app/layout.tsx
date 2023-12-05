@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 }
 
 const linkClass = 'block p-4 text-center hover:underline';
+const lineClass = 'w-36 h-1 mx-auto rounded border-0 bg-red-400';
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
@@ -19,7 +20,12 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <div className='fixed w-full h-12 m-0 p-0 bg-red-400 border-2 border-black overflow-auto top-0'></div>
         <div className='fixed h-full w-48 m-0 p-0 bg-red-600 border-x-2 border-black overflow-auto'>
           <Link href='/' className={linkClass}>Home</Link>
+          <hr className={lineClass}></hr>
+          <Link href='/warmup' className={linkClass}>Warmup</Link>
           <Link href='/scales' className={linkClass}>Scales</Link>
+          <Link href='/technical-exercises' className={linkClass}>Technical Exercises</Link>
+          <Link href='/songs' className={linkClass}>Songs</Link>
+          <hr className={lineClass}></hr>
           <Link href='/options' className={linkClass}>Options</Link>
           <Link href='/account' className={linkClass}>Account</Link>
         </div>

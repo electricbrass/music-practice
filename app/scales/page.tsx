@@ -6,7 +6,7 @@ export default function Scales() {
   const isTreble = getCookie('clef', { cookies }) !== 'bass';
   return (
     <main>
-      <Scale isTreble={isTreble}/>
+      <Scale isTreble={isTreble} mode={'major'}/>
     </main>
   );
 }
