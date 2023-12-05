@@ -9,40 +9,59 @@ type scaleType = 'major' | 'minor'
 
 const scaleTemplate = [['c', 0], ['d', 0], ['e', 0], ['f', 0], ['g', 0], ['a', 0], ['b', 0], ['c', 1], ['d', 1], ['e', 1], ['f', 1], ['g', 1], ['a', 1], ['b', 1]] as NoteType[]
 
+function get7NoteScale(root: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G') {
+  switch(root) {
+    case 'A':
+      return scaleTemplate.slice(5, 12);
+    case 'B':
+      return scaleTemplate.slice(6, 13);
+    case 'C':
+      return scaleTemplate.slice(0, 7);
+    case 'D':
+      return scaleTemplate.slice(1, 8);
+    case 'E':
+      return scaleTemplate.slice(2, 9);
+    case 'F':
+      return scaleTemplate.slice(3, 10);
+    case 'G':
+      return scaleTemplate.slice(4, 11);
+  }
+}
+
 const scales = new Map<scaleType, { [key: string]: NoteType[] }>([
   ['major', {
-    'Cb': scaleTemplate.slice(0, 7),
-    'C':  scaleTemplate.slice(0, 7),
-    'C#': scaleTemplate.slice(0, 7),
-    'Db': scaleTemplate.slice(1, 7),
-    'D':  scaleTemplate.slice(1, 7),
-    'Eb': scaleTemplate.slice(2, 9),
-    'E':  scaleTemplate.slice(2, 9),
-    'F':  scaleTemplate.slice(3, 10),
-    'F#': scaleTemplate.slice(3, 10),
-    'Gb': scaleTemplate.slice(4, 11),
-    'G':  scaleTemplate.slice(4, 11),
-    'Ab': scaleTemplate.slice(5, 12),
-    'A':  scaleTemplate.slice(5, 12),
-    'Bb': scaleTemplate.slice(6, 13),
-    'B':  scaleTemplate.slice(6, 13),
+    'Cb': get7NoteScale('C'),
+    'C':  get7NoteScale('C'),
+    'C#': get7NoteScale('C'),
+    'Db': get7NoteScale('D'),
+    'D':  get7NoteScale('D'),
+    'Eb': get7NoteScale('E'),
+    'E':  get7NoteScale('E'),
+    'F':  get7NoteScale('F'),
+    'F#': get7NoteScale('F'),
+    'Gb': get7NoteScale('G'),
+    'G':  get7NoteScale('G'),
+    'Ab': get7NoteScale('A'),
+    'A':  get7NoteScale('A'),
+    'Bb': get7NoteScale('B'),
+    'B':  get7NoteScale('B')
   }],
   ['minor', {
-    'Cm':  scaleTemplate.slice(0, 7),
-    'C#m': scaleTemplate.slice(0, 7),
-    'Dm':  scaleTemplate.slice(1, 8),
-    'D#m': scaleTemplate.slice(1, 8),
-    'Ebm': scaleTemplate.slice(2, 9),
-    'Em':  scaleTemplate.slice(2, 9),
-    'Fm':  scaleTemplate.slice(3, 10),
-    'F#m': scaleTemplate.slice(3, 10),
-    'Gm':  scaleTemplate.slice(4, 11),
-    'G#m': scaleTemplate.slice(4, 11),
-    'Abm': scaleTemplate.slice(5, 12),
-    'Am':  scaleTemplate.slice(5, 12),
-    'A#m': scaleTemplate.slice(5, 12),
-    'Bbm': scaleTemplate.slice(6, 13),
-    'Bm':  scaleTemplate.slice(6, 13),
+    'Cm':  get7NoteScale('C'),
+    'C#m': get7NoteScale('C'),
+    'Dm':  get7NoteScale('D'),
+    'D#m': get7NoteScale('D'),
+    'Ebm': get7NoteScale('E'),
+    'Em':  get7NoteScale('E'),
+    'Fm':  get7NoteScale('F'),
+    'F#m': get7NoteScale('F'),
+    'Gm':  get7NoteScale('G'),
+    'G#m': get7NoteScale('G'),
+    'Abm': get7NoteScale('A'),
+    'Am':  get7NoteScale('A'),
+    'A#m': get7NoteScale('A'),
+    'Bbm': get7NoteScale('B'),
+    'Bm':  get7NoteScale('B'),
   }]
 ])
 
