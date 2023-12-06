@@ -4,6 +4,7 @@ import './globals.css'
 import Link from 'next/link'
 import * as context from "next/headers"
 import { auth } from "./auth/lucia"
+import Form from './components/lucia-form'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,9 +24,15 @@ export default async function RootLayout({children}: {children: React.ReactNode}
       <body>
         <div className='fixed w-full h-12 m-0 p-0 bg-red-400 border-2 border-black overflow-auto top-0 z-50 flex justify-center items-center'>
           <span className='font-bold text-2xl font-serif text-red-900 italic'>SaxoServer</span>
-          {session ?
-            <Link href='/logout' className='fixed hover:underline right-6 my-auto'>Logout</Link> :
-            <Link href='/login' className='fixed hover:underline right-6 my-auto'>Login</Link>}
+          <div className='fixed right-6 my-auto w-fit h-fit'>
+          { 
+            session ?
+            (<Form action='/api/logout'>
+              <input type='submit' className='hover:underline' value='Logout'/>
+            </Form>) :
+            <Link href='/login' className='hover:underline'>Login</Link>
+          }
+          </div>
         </div>
         <div className='fixed h-full w-48 m-0 p-0 bg-red-600 border-x-2 border-black overflow-auto'>
           <Link href='/' className={linkClass}>Home</Link>
