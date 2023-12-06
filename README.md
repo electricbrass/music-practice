@@ -8,7 +8,9 @@ First, install depencies:
 npm i
 ```
 
-Next, in `node_modules/@lucia-auth/adapter-mongoose/dist/docs.d.ts`, change line 17 from `hashed_password?: string;` to `hashed_password?: string | null;`. (This is due to a minor incompatibility between the current versions of lucia and mongoose, soon this shouldn't be necessary.)
+Next, in `node_modules/@lucia-auth/adapter-mongoose/dist/docs.d.ts`, change line 17 from `hashed_password?: string;` to `hashed_password?: string | null;`.
+
+\(This is due to a minor incompatibility between the current versions of lucia and mongoose, soon this shouldn't be necessary.)
 
 Then, run the development server:
 
