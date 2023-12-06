@@ -2,9 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
-import * as context from "next/headers"
-import { auth } from "./auth/lucia"
 import Form from './components/lucia-form'
+import { getPageSession } from './auth/lucia'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,8 +16,7 @@ const linkClass = 'block p-4 text-center hover:underline';
 const lineClass = 'w-36 h-1 mx-auto rounded border-0 bg-red-400';
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
-  const authRequest = auth.handleRequest("GET", context);
-  const session = await authRequest.validate();
+  const session = await getPageSession();
   return (
     <html lang="en">
       <body>

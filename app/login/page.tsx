@@ -1,12 +1,10 @@
 import Form from "../components/lucia-form";
 import Link from "next/link";
-import * as context from "next/headers";
-import { auth } from "../auth/lucia";
+import { getPageSession } from "../auth/lucia";
 import { redirect } from "next/navigation";
 
 export default async function Signup() {
-	const authRequest = auth.handleRequest("GET", context);
-	const session = await authRequest.validate();
+	const session = await getPageSession();
 	if (session) redirect("/");
 	return (
 		<main className='min-h-full w-full bg-red-100 p-1'>

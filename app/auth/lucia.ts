@@ -3,6 +3,8 @@ import { lucia } from "lucia";
 import { nextjs_future } from "lucia/middleware";
 import { mongoose } from "@lucia-auth/adapter-mongoose";
 import mongodb from "mongoose";
+import { cache } from "react";
+import * as context from "next/headers";
 
 const User = mongodb.models.User || mongodb.model(
   "User",
@@ -88,3 +90,8 @@ const MONGO_URI = process.env.MONGODB_URI || '';
 mongodb.connect(MONGO_URI);
 
 export type Auth = typeof auth;
+
+export const getPageSession = cache(() => {
+	const authRequest = auth.handleRequest("GET", context);
+	return authRequest.validate();
+});
