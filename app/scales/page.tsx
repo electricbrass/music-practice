@@ -1,6 +1,6 @@
 import { getCookie } from 'cookies-next';
 import { cookies } from 'next/headers';
-import Scale from "./scale";
+import Scale from "../components/scale";
 
 const scaleClass = 'my-12 mx-auto w-fit';
 

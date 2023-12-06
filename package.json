@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@lucia-auth/adapter-mongoose": "^3.0.1",
     "cookies-next": "^4.1.0",
+    "lucia": "^2.7.4",
+    "mongoose": "^8.0.2",
     "next": "14.0.3",
-    "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
     "vexflow": "^4.2.3"

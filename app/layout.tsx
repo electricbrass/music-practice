@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
-import Image from 'next/image'
+import * as context from "next/headers"
+import { auth } from "./auth/lucia"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,13 +15,17 @@ export const metadata: Metadata = {
 const linkClass = 'block p-4 text-center hover:underline';
 const lineClass = 'w-36 h-1 mx-auto rounded border-0 bg-red-400';
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default async function RootLayout({children}: {children: React.ReactNode}) {
+  const authRequest = auth.handleRequest("GET", context);
+  const session = await authRequest.validate();
   return (
     <html lang="en">
       <body>
         <div className='fixed w-full h-12 m-0 p-0 bg-red-400 border-2 border-black overflow-auto top-0 z-50 flex justify-center items-center'>
           <span className='font-bold text-2xl font-serif text-red-900 italic'>SaxoServer</span>
-          <Link href='/' className='fixed hover:underline right-6 my-auto'>Login</Link>
+          {session ?
+            <Link href='/logout' className='fixed hover:underline right-6 my-auto'>Logout</Link> :
+            <Link href='/login' className='fixed hover:underline right-6 my-auto'>Login</Link>}
         </div>
         <div className='fixed h-full w-48 m-0 p-0 bg-red-600 border-x-2 border-black overflow-auto'>
           <Link href='/' className={linkClass}>Home</Link>
@@ -32,6 +37,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           <hr className={lineClass}></hr>
           <Link href='/options' className={linkClass}>Options</Link>
           <Link href='/account' className={linkClass}>Account</Link>
+          <div className='fixed block w-48 text-center bottom-4 text-sm'>&copy; 2023</div>
         </div>
         <div className={inter.className + 'fixed ml-48 mt-12'} style={{ height: 'calc(100vh - 48px)', width: 'calc(100% - 192px)' }}>{children}</div>
       </body>
