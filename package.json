@@ -12,7 +12,7 @@
     "@lucia-auth/adapter-mongoose": "^3.0.1",
     "cookies-next": "^4.1.0",
     "lucia": "^2.7.4",
-    "mongoose": "^8.0.2",
+    "mongoose": "^7.6.7",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18",
