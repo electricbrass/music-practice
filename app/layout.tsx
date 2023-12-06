@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,7 +20,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <body>
         <div className='fixed w-full h-12 m-0 p-0 bg-red-400 border-2 border-black overflow-auto top-0 z-50 flex justify-center items-center'>
           <span className='font-bold text-2xl font-serif text-red-900 italic'>SaxoServer</span>
-          <Link href='/' className='fixed hover:underline right-6 my-auto'>Logout</Link>
+          <Link href='/' className='fixed hover:underline right-6 my-auto'>Login</Link>
         </div>
         <div className='fixed h-full w-48 m-0 p-0 bg-red-600 border-x-2 border-black overflow-auto'>
           <Link href='/' className={linkClass}>Home</Link>
@@ -32,7 +33,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           <Link href='/options' className={linkClass}>Options</Link>
           <Link href='/account' className={linkClass}>Account</Link>
         </div>
-        {/* calc - 209px because even thought ml-48 should be 192px it really wants me to use 209px to not be too big for some reason??????? */}
         <div className={inter.className + 'fixed ml-48 mt-12'} style={{ height: 'calc(100vh - 48px)', width: 'calc(100% - 192px)' }}>{children}</div>
       </body>
     </html>

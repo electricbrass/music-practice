@@ -10,7 +10,7 @@ const optionHeaderClass = 'font-bold';
 export default function Options() {
   const selectedClef = getCookie('clef');
   return (
-    <div className='h-screen'>
+    <main className='min-h-full w-full bg-red-100 p-1'>
       <div>
         <h1 className={optionHeaderClass}>Clef</h1>
         <input type='radio' name='clef' id='treble' value='Treble' onClick={() => setCookie('clef', 'treble', { sameSite: true })} defaultChecked={selectedClef !== 'bass'}/>
@@ -18,6 +18,6 @@ export default function Options() {
         <input type='radio' name='clef' id='bass' value='Bass' onClick={() => setCookie('clef', 'bass', { sameSite: true })} defaultChecked={selectedClef === 'bass'}/>
         <label htmlFor='bass'>Bass</label>
       </div>
-    </div>
+    </main>
   );
 }
