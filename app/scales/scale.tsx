@@ -11,7 +11,7 @@ type Key = `${'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'}${'' | 'b' | '#'}${'' | 'm
 
 const scaleTemplate = [['c', 0], ['d', 0], ['e', 0], ['f', 0], ['g', 0], ['a', 0], ['b', 0], ['c', 1], ['d', 1], ['e', 1], ['f', 1], ['g', 1], ['a', 1], ['b', 1]] as NoteType[]
 
-function get7NoteScale(root: NoteLetter) {
+function make7NoteScale(root: NoteLetter) {
   switch(root) {
     case 'A':
       return scaleTemplate.slice(5, 12);
@@ -31,6 +31,34 @@ function get7NoteScale(root: NoteLetter) {
 }
 
 // functions that make blues and pentatonic scales from the 7 note scales
+// make sure to get all the accidentals for these
+function makeMinorPentatonic(root: NoteLetter) {
+  const scale = make7NoteScale(root);
+  return [scale[0], scale[2], scale[3], scale[4], scale[6]];
+}
+
+function makeMajorPentatonic(root: NoteLetter) {
+  const scale = make7NoteScale(root);
+  return [scale[0], scale[1], scale[2], scale[4], scale[6]];
+}
+
+function makeBlues(root: NoteLetter) {
+  const scale = make7NoteScale(root);
+  return [scale[0], scale[2], scale[3], scale[3], scale[4], scale[6]];
+}
+
+// do this one later
+function makeDiminished(root: NoteLetter) {
+  const scale = make7NoteScale(root);
+  return [];
+}
+
+function makeAltered(root: NoteLetter) {
+  const scale = make7NoteScale(root);
+  return [scale[0], scale[1], scale[1], scale[2], scale[4], scale[4], scale[5], scale[6]];
+}
+
+// dorian and the minors all use the 7 note scale
 
 const scales = new Map<scaleType, string[]>([
   ['major', ['Cb', 'C','C#','Db','D','Eb','E','F','F#','Gb','G','Ab','A','Bb','B']],
@@ -44,7 +72,7 @@ export default function Scale({ isTreble, mode }: { isTreble: boolean, mode: sca
     
     const keys = scales.get(mode);
     const key = keys![keys!.length * Math.random() << 0] as Key;
-    const scale = get7NoteScale(key.charAt(0) as NoteLetter);
+    const scale = make7NoteScale(key.charAt(0) as NoteLetter);
 
     const notes = scale.map((note) => new StaveNote({ keys: [`${note[0]}/${note[1] + (isTreble ? 4 : 2)}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true }));
     notes.push(new StaveNote({ keys: [`${scale[0][0]}/${scale[0][1] + (isTreble ? 4 : 2) + 1}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true }));
