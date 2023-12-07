@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from "react";
-import { Vex } from "vexflow";
+import { Vex, Voice } from "vexflow";
 
 type NoteType = [string, number]
 
@@ -58,6 +58,32 @@ function makeAltered(root: NoteLetter) {
   return [scale[0], scale[1], scale[1], scale[2], scale[4], scale[4], scale[5], scale[6]];
 }
 
+function raised7Type(key: Key) {
+  switch (key) {
+    // becomes sharp
+    case 'Am':
+    case 'Bm':
+    case 'Dm':
+    case 'Em':
+    case 'Gm':
+    case 'F#m':
+    case 'C#m':
+    case 'G#m':
+    case 'D#m':
+    case 'A#m':
+      return '#'
+    // becomes natural
+    case 'Cm':
+    case 'Fm':
+    case 'Abm':
+    case 'Bbm':
+    case 'Ebm':
+      return 'n'
+    default:
+      return ''
+  }
+}
+
 // dorian and the minors all use the 7 note scale
 
 const scales = new Map<scaleType, string[]>([
@@ -68,7 +94,7 @@ const scales = new Map<scaleType, string[]>([
 export default function Scale({ isTreble, mode }: { isTreble: boolean, mode: scaleType}) {
   const outputRef = useRef(null!);
   useEffect(() => {
-    const { Renderer, Stave, StaveNote, Voice, Formatter } = Vex.Flow;
+    const { Renderer, Stave, StaveNote, Voice, Formatter, Accidental } = Vex.Flow;
     
     const keys = scales.get(mode);
     const key = keys![keys!.length * Math.random() << 0] as Key;
@@ -77,6 +103,16 @@ export default function Scale({ isTreble, mode }: { isTreble: boolean, mode: sca
     const notes = scale.map((note) => new StaveNote({ keys: [`${note[0]}/${note[1] + (isTreble ? 4 : 2)}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true }));
     notes.push(new StaveNote({ keys: [`${scale[0][0]}/${scale[0][1] + (isTreble ? 4 : 2) + 1}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true }));
     notes.push(...scale.toReversed().map((note) => new StaveNote({ keys: [`${note[0]}/${note[1] + (isTreble ? 4 : 2)}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true })));
+
+    if (mode === 'minor') {
+      notes[6].addModifier(new Accidental(raised7Type(key)));
+    }
+
+    if (mode === 'minor') {
+      // notes[5].addModifier(new Accidental(raised6Type(key)));
+      // notes[8].addModifier(new Accidental());
+      // notes[9].addModifier(new Accidental());
+    }
 
     // Create an SVG renderer and attach it to the DIV element pointed to by outputRef
     const renderer = new Renderer(outputRef.current, Renderer.Backends.SVG);
@@ -91,6 +127,7 @@ export default function Scale({ isTreble, mode }: { isTreble: boolean, mode: sca
 
     const voice = new Voice({ num_beats: 15, beat_value: 4 });
     voice.addTickables(notes);
+    // Accidental.applyAccidentals([voice], key);
 
     // Format and justify the notes to 300 pixels.
     new Formatter().joinVoices([voice]).format([voice], 500);
