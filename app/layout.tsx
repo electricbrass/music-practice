@@ -21,7 +21,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
   return (
     <html lang="en">
       <body className='text-black'>
-        <Toaster position='bottom-center' />
+        <Toaster position='bottom-center' toastOptions={{style: {background: '#FEF2F2'}}} />
         <div className='fixed w-full h-12 m-0 p-0 bg-red-400 border-2 border-black overflow-auto top-0 z-50 flex justify-center items-center'>
           <span className='font-bold text-2xl font-serif text-red-900 italic'>SaxoServer</span>
           <div className='fixed right-6 my-auto w-fit h-fit'>
