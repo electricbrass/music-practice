@@ -18,39 +18,39 @@ export default function Scales() {
       </div>
       <div className={scaleClass}>
         <h1 className='text-lg'>Natural Minor Scale</h1>
-        <Scale isTreble={isTreble} mode={'minor'}/>
+        <Scale isTreble={isTreble} mode={'natural minor'}/>
       </div>
       <div className={scaleClass}>
-        <h1 className='text-lg'>Harmonic Minor Scale -- NOT IMPLEMENTED</h1>
-        <Scale isTreble={isTreble} mode={'minor'}/>
+        <h1 className='text-lg'>Harmonic Minor Scale</h1>
+        <Scale isTreble={isTreble} mode={'harmonic minor'}/>
       </div>
       <div className={scaleClass}>
-        <h1 className='text-lg'>Melodic Minor Scale -- NOT IMPLEMENTED</h1>
-        <Scale isTreble={isTreble} mode={'minor'}/>
+        <h1 className='text-lg'>Melodic Minor Scale</h1>
+        <Scale isTreble={isTreble} mode={'melodic minor'}/>
       </div>
       <div className={scaleClass}>
         <h1 className='text-lg'>Major Pentatonic Scale -- NOT IMPLEMENTED</h1>
-        <Scale isTreble={isTreble} mode={'minor'}/>
+        <Scale isTreble={isTreble} mode={'natural minor'}/>
       </div>
       <div className={scaleClass}>
         <h1 className='text-lg'>Minor Pentatonic Scale -- NOT IMPLEMENTED</h1>
-        <Scale isTreble={isTreble} mode={'minor'}/>
+        <Scale isTreble={isTreble} mode={'natural minor'}/>
       </div>
       <div className={scaleClass}>
         <h1 className='text-lg'>Minor Blues Scale -- NOT IMPLEMENTED</h1>
-        <Scale isTreble={isTreble} mode={'minor'}/>
+        <Scale isTreble={isTreble} mode={'natural minor'}/>
       </div>
       <div className={scaleClass}>
         <h1 className='text-lg'>Half-Whole Diminished Scale -- NOT IMPLEMENTED</h1>
-        <Scale isTreble={isTreble} mode={'minor'}/>
+        <Scale isTreble={isTreble} mode={'natural minor'}/>
       </div>
       <div className={scaleClass}>
         <h1 className='text-lg'>Dorian Scale -- NOT IMPLEMENTED</h1>
-        <Scale isTreble={isTreble} mode={'minor'}/>
+        <Scale isTreble={isTreble} mode={'natural minor'}/>
       </div>
       <div className={scaleClass}>
         <h1 className='text-lg'>Altered Dominant Scale -- NOT IMPLEMENTED</h1>
-        <Scale isTreble={isTreble} mode={'minor'}/>
+        <Scale isTreble={isTreble} mode={'natural minor'}/>
       </div>
     </main>
   );

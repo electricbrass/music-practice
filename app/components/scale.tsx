@@ -5,7 +5,7 @@ import { Vex, Voice } from "vexflow";
 
 type NoteType = [string, number]
 
-type scaleType = 'major' | 'minor'
+type scaleType = 'major' | 'natural minor' | 'harmonic minor' | 'melodic minor'
 type NoteLetter = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
 type Key = `${'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'}${'' | 'b' | '#'}${'' | 'm'}`
 
@@ -68,9 +68,6 @@ function raised7Type(key: Key) {
     case 'Gm':
     case 'F#m':
     case 'C#m':
-    case 'G#m':
-    case 'D#m':
-    case 'A#m':
       return '#'
     // becomes natural
     case 'Cm':
@@ -79,8 +76,51 @@ function raised7Type(key: Key) {
     case 'Bbm':
     case 'Ebm':
       return 'n'
+    case 'G#m':
+    case 'D#m':
+    case 'A#m':
+      return '##';
     default:
       return ''
+  }
+}
+
+function raised6Type(key: Key) {
+  switch (key) {
+    // becomes sharp
+    case 'Am':
+    case 'Bm':
+    case 'Em':
+    case 'F#m':
+    case 'C#m':
+    case 'G#m':
+    case 'D#m':
+      return '#'
+    // becomes natural
+    case 'Cm':
+    case 'Dm':
+    case 'Fm':
+    case 'Gm':
+    case 'Abm':
+    case 'Bbm':
+    case 'Ebm':
+      return 'n'
+    case 'A#m':
+      return '##';
+    default:
+      return ''
+  }
+}
+
+function reverseRaising(accidental: '#' | 'n' | '##' | '') {
+  if (accidental === '#') {
+    return 'n';
+  } else if (accidental === 'n') {
+    return 'b';
+  } else if (accidental === '##') {
+    return '#';
+  } else {
+    return '';
   }
 }
 
@@ -88,7 +128,9 @@ function raised7Type(key: Key) {
 
 const scales = new Map<scaleType, string[]>([
   ['major', ['Cb', 'C','C#','Db','D','Eb','E','F','F#','Gb','G','Ab','A','Bb','B']],
-  ['minor', ['Cm', 'C#m','Dm','D#m','Ebm','Em','Fm','F#m','Gm','G#m','Abm','Am','A#m','Bbm','Bm']]
+  ['natural minor', ['Cm', 'C#m','Dm','D#m','Ebm','Em','Fm','F#m','Gm','G#m','Abm','Am','A#m','Bbm','Bm']],
+  ['harmonic minor', ['Cm', 'C#m','Dm','D#m','Ebm','Em','Fm','F#m','Gm','G#m','Abm','Am','A#m','Bbm','Bm']],
+  ['melodic minor', ['Cm', 'C#m','Dm','D#m','Ebm','Em','Fm','F#m','Gm','G#m','Abm','Am','A#m','Bbm','Bm']]
 ])
 
 export default function Scale({ isTreble, mode }: { isTreble: boolean, mode: scaleType}) {
@@ -104,14 +146,14 @@ export default function Scale({ isTreble, mode }: { isTreble: boolean, mode: sca
     notes.push(new StaveNote({ keys: [`${scale[0][0]}/${scale[0][1] + (isTreble ? 4 : 2) + 1}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true }));
     notes.push(...scale.toReversed().map((note) => new StaveNote({ keys: [`${note[0]}/${note[1] + (isTreble ? 4 : 2)}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true })));
 
-    if (mode === 'minor') {
+    if (mode === 'harmonic minor' || mode == 'melodic minor') {
       notes[6].addModifier(new Accidental(raised7Type(key)));
     }
 
-    if (mode === 'minor') {
-      // notes[5].addModifier(new Accidental(raised6Type(key)));
-      // notes[8].addModifier(new Accidental());
-      // notes[9].addModifier(new Accidental());
+    if (mode === 'melodic minor') {
+      notes[5].addModifier(new Accidental(raised6Type(key)));
+      notes[8].addModifier(new Accidental(reverseRaising(raised7Type(key))));
+      notes[9].addModifier(new Accidental(reverseRaising(raised6Type(key))));
     }
 
     // Create an SVG renderer and attach it to the DIV element pointed to by outputRef
