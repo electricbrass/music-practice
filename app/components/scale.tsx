@@ -7,7 +7,7 @@ type NoteType = [string, number]
 
 export type scaleType = 'major' | 'natural minor' | 'harmonic minor' | 'melodic minor'
 type NoteLetter = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
-type Key = `${'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'}${'' | 'b' | '#'}${'' | 'm'}`
+export type Key = `${'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'}${'' | 'b' | '#'}${'' | 'm'}`
 
 const scaleTemplate = [['c', 0], ['d', 0], ['e', 0], ['f', 0], ['g', 0], ['a', 0], ['b', 0], ['c', 1], ['d', 1], ['e', 1], ['f', 1], ['g', 1], ['a', 1], ['b', 1]] as NoteType[]
 
@@ -133,13 +133,18 @@ const scales = new Map<scaleType, string[]>([
   ['melodic minor', ['Cm', 'C#m','Dm','D#m','Ebm','Em','Fm','F#m','Gm','G#m','Abm','Am','A#m','Bbm','Bm']]
 ])
 
-export default function Scale({ isTreble, mode }: { isTreble: boolean, mode: scaleType}) {
+export default function Scale({ isTreble, mode, userKeys }: { isTreble: boolean, mode: scaleType, userKeys: Key[] | undefined }) {
   const outputRef = useRef(null!);
   useEffect(() => {
     const { Renderer, Stave, StaveNote, Voice, Formatter, Accidental } = Vex.Flow;
     
-    const keys = scales.get(mode);
-    const key = keys![keys!.length * Math.random() << 0] as Key;
+    let keys: Key[]
+    if (userKeys) {
+      keys = userKeys;
+    }  else {
+      keys = scales.get(mode) as Key[];
+    }
+    const key = keys![keys!.length * Math.random() << 0];
     const scale = make7NoteScale(key.charAt(0) as NoteLetter);
 
     const notes = scale.map(([note, octave]) => new StaveNote({ keys: [`${note}/${octave + (isTreble ? 4 : 2)}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true }));
@@ -190,7 +195,7 @@ export default function Scale({ isTreble, mode }: { isTreble: boolean, mode: sca
       renderer.resize(700 * scaleFactor, 150 * scaleFactor);
       context.scale(scaleFactor, scaleFactor);
     }
-  }, [isTreble, mode])
+  }, [isTreble, mode, userKeys])
   return (
     <div ref={outputRef} id='output' className='bg-amber-100 h-fit w-fit p-4 rounded-lg shadow'></div>
   );

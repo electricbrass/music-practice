@@ -1,6 +1,6 @@
 import { getCookie } from 'cookies-next';
 import { cookies } from 'next/headers';
-import Scale, { scaleType } from "../components/scale";
+import Scale, { scaleType, Key } from "../components/scale";
 import { getPageSession } from '../auth/lucia';
 import Preferences, { IPreferences } from '../models/preferences';
 
@@ -11,8 +11,13 @@ import Preferences, { IPreferences } from '../models/preferences';
 export default async function Scales() {
   const session = await getPageSession();
   let isTreble: boolean;
+  let preferences: IPreferences | undefined;
   if (session) {
-    const preferences = await Preferences.findOne({ user_id: session.user.userId }).lean() as IPreferences;
+    try {
+      preferences = await Preferences.findOne({ user_id: session.user.userId }).lean() as IPreferences;
+    } catch (e) {
+    // TODO: error shit
+    }
     isTreble = preferences?.clef !== 'bass';
   } else {
     isTreble = getCookie('clef', { cookies }) !== 'bass';
@@ -20,20 +25,20 @@ export default async function Scales() {
   return (
     <main className='grid grid-cols-2 justify-center'>
       {([
-        ['Major Scale', 'major'],
-        ['Natural Minor Scale', 'natural minor'],
-        ['Harmonic Minor Scale', 'harmonic minor'],
-        ['Melodic Minor Scale', 'melodic minor'],
-        ['Major Pentatonic Scale -- NOT IMPLEMENTED', 'major'],
-        ['Minor Pentatonic Scale -- NOT IMPLEMENTED', 'major'],
-        ['Minor Blues Scale -- NOT IMPLEMENTED', 'major'],
-        ['Half-Whole Diminished Scale -- NOT IMPLEMENTED', 'major'],
-        ['Dorian Scale -- NOT IMPLEMENTED', 'major'],
-        ['Altered Dominant Scale -- NOT IMPLEMENTED', 'major']
-      ] as [string, scaleType][]).map(([name, type]) => (
+        ['Major Scale', 'major', preferences?.major_keys],
+        ['Natural Minor Scale', 'natural minor', preferences?.n_minor_keys],
+        ['Harmonic Minor Scale', 'harmonic minor', preferences?.h_minor_keys],
+        ['Melodic Minor Scale', 'melodic minor', preferences?.m_minor_keys],
+        ['Major Pentatonic Scale -- NOT IMPLEMENTED', 'major', preferences?.major_keys],
+        ['Minor Pentatonic Scale -- NOT IMPLEMENTED', 'major', preferences?.major_keys],
+        ['Minor Blues Scale -- NOT IMPLEMENTED', 'major', preferences?.major_keys],
+        ['Half-Whole Diminished Scale -- NOT IMPLEMENTED', 'major', preferences?.major_keys],
+        ['Dorian Scale -- NOT IMPLEMENTED', 'major', preferences?.major_keys],
+        ['Altered Dominant Scale -- NOT IMPLEMENTED', 'major', preferences?.major_keys]
+      ] as [string, scaleType, Key[] | undefined][]).map(([name, type, db]) => (
         <div className='my-12 mx-auto w-fit' key={name}>
           <h1 className='text-lg'>{name}</h1>
-          <Scale isTreble={isTreble} mode={type}/>
+          <Scale isTreble={isTreble} mode={type} userKeys={db}/>
         </div>
       ))
       }

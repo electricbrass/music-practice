@@ -16,7 +16,12 @@ export default async function Options() {
     </main>
     );
   }
-  const preferences = await Preferences.findOne({ user_id: session.user.userId }).lean() as IPreferences;
+  let preferences: IPreferences | undefined;
+  try {
+    preferences = await Preferences.findOne({ user_id: session.user.userId }).lean() as IPreferences;
+  } catch (e) {
+    // TODO: error shit
+  }
   const selectedClef = preferences?.clef || 'bass';
   return (
     <main>
