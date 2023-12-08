@@ -3,6 +3,7 @@ import { getPageSession } from '../auth/lucia';
 import Form from '../components/luciaForm';
 import Preferences from "@/app/models/preferences";
 import { IPreferences } from '@/app/models/preferences';
+import toast from 'react-hot-toast';
 
 const optionHeaderClass = 'font-bold';
 
@@ -20,12 +21,12 @@ export default async function Options() {
   try {
     preferences = await Preferences.findOne({ user_id: session.user.userId }).lean() as IPreferences;
   } catch (e) {
-    // TODO: error shit
+    toast.error('Error loading user preferences.')
   }
   const selectedClef = preferences?.clef || 'bass';
   return (
     <main>
-      <Form action='/api/preferences'>
+      <Form action='/api/preferences' successMessage='Settings saved!'>
         <div>
           <h1 className={optionHeaderClass}>Clef</h1>
           <input className='mr-1' type='radio' name='clef' id='treble' value='treble' defaultChecked={selectedClef !== 'bass'}/>
@@ -115,7 +116,7 @@ export default async function Options() {
             </div>
           </div>
         ))}
-        <input type='submit' value='Save' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1'/>
+        <input type='submit' value='Save' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 cursor-pointer'/>
       </Form>
     </main>
   );

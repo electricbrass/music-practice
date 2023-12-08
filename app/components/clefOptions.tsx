@@ -3,6 +3,7 @@
 import { getCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const optionHeaderClass = 'font-bold';
 
@@ -13,6 +14,7 @@ export default function ClefOptions() {
   const saveCookie = () => {
     setCookie('clef', clef || 'treble', { sameSite: true });
     router.refresh();
+    toast.success('Settings saved!');
   }
   return (
     <div>
@@ -23,7 +25,7 @@ export default function ClefOptions() {
         <input type='radio' name='clef' id='bass' value='bass' defaultChecked={selectedClef === 'bass'} onChange={(e) => setClef(e.target.value)}/>
         <label htmlFor='bass'>Bass</label>
       </div>
-      <input type='button' value='Save' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1' onClick={saveCookie}/>
+      <input type='button' value='Save' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 cursor-pointer' onClick={saveCookie}/>
     </div>
   );
 }

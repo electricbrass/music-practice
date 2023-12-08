@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import Scale, { scaleType, Key } from "../components/scale";
 import { getPageSession } from '../auth/lucia';
 import Preferences, { IPreferences } from '../models/preferences';
+import toast from 'react-hot-toast';
 
 // make it so some days it says hey do all 12 major scales (in order like, fourths, or descending whole steps)
 // on other days its heres one of each type of scale, all on the same root
@@ -16,7 +17,7 @@ export default async function Scales() {
     try {
       preferences = await Preferences.findOne({ user_id: session.user.userId }).lean() as IPreferences;
     } catch (e) {
-    // TODO: error shit
+      toast.error('Error loading user data');
     }
     isTreble = preferences?.clef !== 'bass';
   } else {
@@ -41,7 +42,7 @@ export default async function Scales() {
           <Scale isTreble={isTreble} mode={type} userKeys={db}/>
         </div>
       ))
-      }
+    }
     </main>
   );
 }

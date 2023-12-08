@@ -1,5 +1,4 @@
-import { auth, getPageSession } from "../auth/lucia";
-import * as context from "next/headers";
+import { getPageSession } from "../auth/lucia";
 import { redirect } from "next/navigation";
 
 import Form from "../components/luciaForm";

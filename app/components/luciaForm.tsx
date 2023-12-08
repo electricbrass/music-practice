@@ -1,8 +1,24 @@
 'use client'
 
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
-export default function Form({ children, action }: { children: React.ReactNode, action: string }) {
+const toastHandler = async (error: boolean, message?: string) => {
+	if (error && message) {
+		try {
+			const body = JSON.parse(message);
+			toast.error(body.error as string);
+		} catch (e) {
+			toast.error(message);
+		}	
+	} else if (error) {
+		toast.error('An error occurred.');
+	} else if (message) {
+		toast.success(message);
+	}
+}
+
+export default function Form({ children, action, successMessage }: { children: React.ReactNode, action: string, successMessage?: string }) {
 	const router = useRouter();
 	return (
 		<form
@@ -16,6 +32,16 @@ export default function Form({ children, action }: { children: React.ReactNode, 
 					body: formData,
 					redirect: "manual"
 				});
+				const contentType = response.headers.get("content-type");
+				const ok = response.status === 0 || response.ok;
+				console.log(contentType)
+				if (contentType === 'application/json') {
+					toastHandler(!ok, JSON.stringify(await response.json()));
+				} else if (contentType === 'text/plain;charset=UTF-8') {
+					toastHandler(!ok, await response.text());
+				} else {
+					toastHandler(!ok, successMessage)
+				}
 
 				if (response.status === 0) {
 					// redirected

@@ -27,7 +27,7 @@ export const POST = async (request: NextRequest) => {
     {
       upsert: true
     })
-    return new Response('successfully updated preferences', {
+    return new Response('Successfully updated preferences', {
 			status: 302
 		});
   } catch (e) {
