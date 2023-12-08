@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-const toastHandler = async (error: boolean, message?: string) => {
+const toastHandler = (error: boolean, message?: string) => {
 	if (error && message) {
 		try {
 			const body = JSON.parse(message);
