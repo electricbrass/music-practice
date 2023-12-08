@@ -17,11 +17,9 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply bg-red-100
+}
+
+main {
+  @apply min-h-full w-full bg-red-100 p-1
 }

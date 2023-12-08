@@ -86,8 +86,7 @@ export const auth = lucia({
 	}
 });
 
-const MONGO_URI = process.env.MONGODB_URI || '';
-mongodb.connect(MONGO_URI);
+mongodb.connect(process.env.MONGODB_URI!);
 
 export type Auth = typeof auth;
 

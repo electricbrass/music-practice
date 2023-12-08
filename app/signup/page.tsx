@@ -1,4 +1,4 @@
-import Form from "../components/lucia-form";
+import Form from "../components/luciaForm";
 import Link from "next/link";
 import { getPageSession } from "../auth/lucia";
 import { redirect } from "next/navigation";
@@ -7,7 +7,7 @@ export default async function Signup() {
 	const session = await getPageSession();
 	if (session) redirect("/account");
 	return (
-		<main className='min-h-full w-full bg-red-100 p-1'>
+		<main>
 			<div className='m-10 w-64'>
       	<Form action='/api/signup'>
       	  <input className='m-1 shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type='text' name='username' placeholder={'username'} id='username'/>

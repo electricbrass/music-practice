@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
-import Form from './components/lucia-form'
+import Form from './components/luciaForm'
 import { getPageSession } from './auth/lucia'
 
 const inter = Inter({ subsets: ['latin'] })
