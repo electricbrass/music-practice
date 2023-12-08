@@ -144,7 +144,7 @@ export default function Scale({ isTreble, mode, userKeys }: { isTreble: boolean,
     }  else {
       keys = scales.get(mode) as Key[];
     }
-    const key = keys![keys!.length * Math.random() << 0];
+    const key = keys[keys.length * Math.random() << 0];
     const scale = make7NoteScale(key.charAt(0) as NoteLetter);
 
     const notes = scale.map(([note, octave]) => new StaveNote({ keys: [`${note}/${octave + (isTreble ? 4 : 2)}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true }));
