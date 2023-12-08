@@ -1,20 +1,35 @@
-import { getCookie, setCookie } from 'cookies-next';
 import ClefOptions from '../components/clefOptions';
 import { getPageSession } from '../auth/lucia';
-
-// instead of saving settings to cookie or db when making changes, have a save button that saves all changes and forces navigation to home page + refresh
+import Form from '../components/luciaForm';
+import Preferences from "@/app/models/preferences";
+import { IPreferences } from '@/app/models/preferences';
 
 const optionHeaderClass = 'font-bold';
 
 // put options like bass clef or treble clef here
 export default async function Options() {
   const session = await getPageSession();
+  if (!session) {
+    return (
+    <main>
+      <ClefOptions/>
+    </main>
+    );
+  }
+  const preferences = await Preferences.findOne({ user_id: session.user.userId }).lean() as IPreferences;
+  const selectedClef = preferences?.clef || 'bass';
   return (
     <main>
-      <ClefOptions session={session}/>
-      {session &&
-        <div></div>
-      }
+      <Form action='/api/preferences'>
+        <h1 className={optionHeaderClass}>Clef</h1>
+          <div>
+          <input type='radio' name='clef' id='treble' value='treble' defaultChecked={selectedClef !== 'bass'}/>
+          <label htmlFor='treble'>Treble</label>
+          <input type='radio' name='clef' id='bass' value='bass' defaultChecked={selectedClef === 'bass'}/>
+          <label htmlFor='bass'>Bass</label>
+        </div>
+        <input type='submit' value='Save' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1'/>
+      </Form>
     </main>
   );
 }

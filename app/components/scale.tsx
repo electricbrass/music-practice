@@ -5,7 +5,7 @@ import { Vex, Voice } from "vexflow";
 
 type NoteType = [string, number]
 
-type scaleType = 'major' | 'natural minor' | 'harmonic minor' | 'melodic minor'
+export type scaleType = 'major' | 'natural minor' | 'harmonic minor' | 'melodic minor'
 type NoteLetter = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
 type Key = `${'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'}${'' | 'b' | '#'}${'' | 'm'}`
 
@@ -142,9 +142,9 @@ export default function Scale({ isTreble, mode }: { isTreble: boolean, mode: sca
     const key = keys![keys!.length * Math.random() << 0] as Key;
     const scale = make7NoteScale(key.charAt(0) as NoteLetter);
 
-    const notes = scale.map((note) => new StaveNote({ keys: [`${note[0]}/${note[1] + (isTreble ? 4 : 2)}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true }));
+    const notes = scale.map(([note, octave]) => new StaveNote({ keys: [`${note}/${octave + (isTreble ? 4 : 2)}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true }));
     notes.push(new StaveNote({ keys: [`${scale[0][0]}/${scale[0][1] + (isTreble ? 4 : 2) + 1}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true }));
-    notes.push(...scale.toReversed().map((note) => new StaveNote({ keys: [`${note[0]}/${note[1] + (isTreble ? 4 : 2)}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true })));
+    notes.push(...scale.toReversed().map(([note, octave]) => new StaveNote({ keys: [`${note}/${octave + (isTreble ? 4 : 2)}`], duration: 'q', clef: isTreble ? 'treble' : 'bass', auto_stem: true })));
 
     if (mode === 'harmonic minor' || mode == 'melodic minor') {
       notes[6].addModifier(new Accidental(raised7Type(key)));
