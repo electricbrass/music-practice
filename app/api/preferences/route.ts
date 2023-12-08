@@ -11,11 +11,11 @@ export const POST = async (request: NextRequest) => {
     });
   }
   const formData = await request.formData();
-  const clef = formData.get('clef') as string | undefined;
-  const majorKeys = formData.getAll('major') as string[] | undefined;
-  const nMinorKeys = formData.getAll('natural minor') as string[] | undefined;
-  const hMinorKeys = formData.getAll('harmonic minor') as string[] | undefined;
-  const mMinorKeys = formData.getAll('melodic minor') as string[] | undefined;
+  const clef = formData.get('clef') as string | null;
+  const majorKeys = formData.getAll('major') as string[] | null;
+  const nMinorKeys = formData.getAll('natural minor') as string[] | null;
+  const hMinorKeys = formData.getAll('harmonic minor') as string[] | null;
+  const mMinorKeys = formData.getAll('melodic minor') as string[] | null;
   try {
     await Preferences.updateOne({ user_id: session.user.userId }, {
       clef: clef,
