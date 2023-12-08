@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <main className='min-h-full w-full bg-red-100 p-1'>
+    <main>
       <h1 className='text-7xl mx-auto text-center my-10 font-serif'>Welcome to SaxoServer!</h1>
       <p className='text-justify w-1/2 mx-auto'>
         Adolphe Sax {'('}inventor of the <a className='hover:underline' href='https://en.wikipedia.org/wiki/Saxophone'>saxophone</a>{')'} had so much fun naming musical inventions {'('}and weaponry!{')'} after himself that we thought we had to join in. After all, who doesn&apos;t want a saxophone, a <a className='hover:underline' href='https://en.wikipedia.org/wiki/Saxhorn'>saxhorn</a>, a <a className='hover:underline' href='https://en.wikipedia.org/wiki/Saxocannon'>saxocannon</a>, and a <a className='hover:underline' href='https://en.wikipedia.org/wiki/Saxotromba'>saxotromba</a>!

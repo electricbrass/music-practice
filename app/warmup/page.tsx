@@ -1,4 +1,4 @@
-export default function Songs() {
+export default function Warmup() {
   return (
     <main>
       <h1 className='text-7xl mx-auto text-center mt-48 font-mono'>Under Construction</h1>
