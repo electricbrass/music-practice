@@ -139,7 +139,7 @@ export default function Scale({ isTreble, mode, userKeys }: { isTreble: boolean,
     const { Renderer, Stave, StaveNote, Voice, Formatter, Accidental } = Vex.Flow;
     
     let keys: Key[]
-    if (userKeys) {
+    if (userKeys && userKeys.length > 0) {
       keys = userKeys;
     }  else {
       keys = scales.get(mode) as Key[];
