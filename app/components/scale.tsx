@@ -161,8 +161,14 @@ export default function Scale({ isTreble, mode, userKeys }: { isTreble: boolean,
       notes[9].addModifier(new Accidental(reverseRaising(raised6Type(key))));
     }
 
+    const div = outputRef.current as HTMLDivElement;
+
+    while(div.lastChild) {
+      div.removeChild(div.lastChild);
+    }
+
     // Create an SVG renderer and attach it to the DIV element pointed to by outputRef
-    const renderer = new Renderer(outputRef.current, Renderer.Backends.SVG);
+    const renderer = new Renderer(div, Renderer.Backends.SVG);
 
     // Configure the rendering context.
     renderer.resize(700, 150);

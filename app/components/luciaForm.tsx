@@ -32,9 +32,8 @@ export default function Form({ children, action, successMessage }: { children: R
 					body: formData,
 					redirect: "manual"
 				});
-				const contentType = response.headers.get("content-type");
+				const contentType = response.headers.get('content-type');
 				const ok = response.status === 0 || response.ok;
-				console.log(contentType)
 				if (contentType === 'application/json') {
 					toastHandler(!ok, JSON.stringify(await response.json()));
 				} else if (contentType === 'text/plain;charset=UTF-8') {
