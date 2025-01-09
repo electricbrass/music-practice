@@ -13,7 +13,7 @@
     "cookies-next": "^4.1.0",
     "lucia": "^2.7.4",
     "mongoose": "^7.6.7",
-    "next": "14.0.3",
+    "next": "^14.2.23",
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
